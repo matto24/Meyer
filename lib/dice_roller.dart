@@ -24,10 +24,12 @@ class _DiceRollerState extends State<DiceRoller> {
   String meyer() {
     if (num1 + num2 == 3) {
       return 'Meyer';
-    } else if (num1 + num2 == 4) {
+    } else if (num1 + num2 == 4 && num1 != num2) {
       return 'Lille meyer';
     } else if (num1 == num2) {
       return 'Par $num1';
+    } else if (num1 + num2 == 5 && num1 != 4 && num2 != 4) {
+      return 'Fælles skål';
     } else {
       if (num1 > num2) {
         return '$num1$num2';
@@ -52,18 +54,31 @@ class _DiceRollerState extends State<DiceRoller> {
         const SizedBox(
           height: 40,
         ),
-        Row(
-          children: [
-            Image.asset(
-              'assets/images/dice-$num1.png',
-              width: 200,
-            ),
-            Image.asset(
-              'assets/images/dice-$num2.png',
-              width: 200,
-            ),
-          ],
-        ),
+        num1 > num2
+            ? Row(
+                children: [
+                  Image.asset(
+                    'assets/images/dice-$num1.png',
+                    width: 200,
+                  ),
+                  Image.asset(
+                    'assets/images/dice-$num2.png',
+                    width: 200,
+                  ),
+                ],
+              )
+            : Row(
+                children: [
+                  Image.asset(
+                    'assets/images/dice-$num2.png',
+                    width: 200,
+                  ),
+                  Image.asset(
+                    'assets/images/dice-$num1.png',
+                    width: 200,
+                  ),
+                ],
+              ),
         const SizedBox(
           height: 60,
         ),
@@ -74,7 +89,7 @@ class _DiceRollerState extends State<DiceRoller> {
             textStyle: const TextStyle(
               fontSize: 28,
             ),
-            shape: StadiumBorder(),
+            shape: const StadiumBorder(),
             padding: const EdgeInsets.all(16),
           ),
           child: const Text('Roll Dice'),
